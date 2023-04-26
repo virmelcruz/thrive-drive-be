@@ -22,12 +22,14 @@ const createFile = async (fileBody) => {
  */
 const queryFiles = async (filter, options) => {
   const { parentId } = filter;
-  const fileInfo = parentId === 'home' ? { parentId: '' } : await getFileById(parentId);
+  const fileInfo = parentId === 'home' ? { } : await getFileById(parentId);
   const files = await File.paginate(filter, options);
-  return {
-    parentId: fileInfo.parentId,
+  const newFile = {
+    fileInfo,
     ...files,
   };
+
+  return newFile;
 };
 
 /**
